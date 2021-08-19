@@ -1,0 +1,43 @@
+question==>https://www.codechef.com/problems/FIBOSEQ
+editorial==>https://discuss.codechef.com/t/fiboseq-editorial/93553
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long 
+
+int binaryexpo(int base,int powe,int mod){
+    int ans =1;
+    while(powe){
+        if(powe%2==0){
+            base = (base*base)%mod;
+            powe = powe/2;
+        }
+        else{
+            ans = (ans*base)%mod;
+            powe = powe-1;
+        }
+    }
+    return ans;
+}
+signed main(){
+    int mod = 1e9+7;
+    int maxi = 100008;
+    int ones[maxi],size[maxi],power[maxi];
+    ones[0]=0;
+    ones[1]=1;
+    size[0]=1;
+    size[1]=1;
+    int i;
+    for(i=2;i<=maxi;i++){
+        ones[i]=(ones[i-1]+ones[i-2])%mod;
+        size[i]=(size[i-1]+size[i-2])%(mod-1);
+    }
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        cout<<(ones[n]*binaryexpo(2,size[n]-1,mod))%mod<<endl;
+    }
+    
+    return 0;
+}
